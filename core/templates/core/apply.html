@@ -1,30 +1,105 @@
-<!-- templates/core/apply.html -->
 {% load static %}
+{% load widget_tweaks %}
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>Apply | Together Culture</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+    <style>
+        .form-section {
+            background-color: #f8f9fa;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .form-title {
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #222;
+        }
+
+        .form-label {
+            font-weight: 500;
+            color: #333;
+        }
+
+        .hero-section {
+            background-color: #e9f5f5;
+            padding: 60px 0;
+            text-align: center;
+        }
+
+        .hero-section h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #0a4d4d;
+        }
+
+        .hero-section p {
+            font-size: 1.1rem;
+            color: #444;
+            margin-top: 10px;
+        }
+    </style>
 </head>
-<body class="bg-light">
-<div class="container mt-5">
-    <h2 class="text-center mb-4">Become a Member</h2>
-    <div class="card shadow p-4">
-        <form method="post">
-            {% csrf_token %}
-            {{ form.non_field_errors }}
-            {% for field in form %}
-                <div class="mb-3">
-                    <label class="form-label">{{ field.label }}</label>
-                    {{ field }}
-                    {% if field.errors %}
-                        <div class="text-danger small">{{ field.errors|striptags }}</div>
-                    {% endif %}
-                </div>
-            {% endfor %}
-            <button type="submit" class="btn btn-primary">Submit Application</button>
-        </form>
+<body class="bg-white">
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4">
+    <a class="navbar-brand" href="/">Together Culture</a>
+    <div class="ms-auto">
+        <a href="{% url 'home' %}" class="btn btn-outline-light me-2">Home</a>
+        <a href="{% url 'login' %}" class="btn btn-primary">Login</a>
+    </div>
+</nav>
+
+<!-- Hero Banner -->
+<section class="hero-section">
+    <div class="container">
+        <h1>Join Together Culture</h1>
+        <p>Shape a better future through collaboration, leadership, and creativity.</p>
+    </div>
+</section>
+
+<!-- Application Form -->
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-10 col-lg-8">
+            <div class="form-section">
+                <h2 class="form-title text-center">Membership Application</h2>
+                <form method="post" novalidate>
+                    {% csrf_token %}
+                    {{ form.non_field_errors }}
+                    {% for field in form %}
+                      <div class="mb-3">
+                        <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        {% if field.name == "interest" %}
+                          {{ field|add_class:"form-select" }}
+                        {% else %}
+                          {{ field|add_class:"form-control" }}
+                        {% endif %}
+                        {% if field.errors %}
+                          <div class="text-danger small mt-1">{{ field.errors|striptags }}</div>
+                        {% endif %}
+                      </div>
+                    {% endfor %}
+                    <div class="d-grid mt-4">
+                        <button type="submit" class="btn btn-success btn-lg">Submit Application</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 </div>
+
+<!-- Footer -->
+<footer class="text-center text-muted py-4 border-top">
+    &copy; {{ now|default:"2025" }} Together Culture. All rights reserved.
+</footer>
+
 </body>
 </html>
