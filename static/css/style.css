@@ -1,0 +1,26 @@
+/* static/css/style.css */
+
+body {
+    font-family: "Segoe UI", sans-serif;
+    background-color: #ffffff;
+    color: #333;
+}
+
+.navbar {
+    border-bottom: 3px solid #39a5a5;
+}
+
+.btn-success {
+    background-color: #39a5a5;
+    border-color: #39a5a5;
+}
+
+.btn-success:hover {
+    background-color: #2f8b8b;
+    border-color: #2f8b8b;
+}
+
+footer {
+    font-size: 0.9rem;
+    color: #666;
+}
